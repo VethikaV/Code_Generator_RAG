@@ -10,11 +10,11 @@ def code_generator_app():
 
     # Sidebar configuration
     with st.sidebar:
-        st.image("https://cdn-icons-png.flaticon.com/512/907/907457.png", width=80)
+        st.image("Assets/CodeGenerator.jpeg", width=80)
         st.title("🚀 AI Code Generator")
         section = st.radio("📌 Choose a Section:", ["Code Generator RAG", "RAG File Ingestion"], index=0)
         st.markdown("---")
-        st.caption("Built with ❤️ using Streamlit")
+        st.caption("Mini Project")
 
     # db initialization
     vectordatabase = vectordb.initialize_chroma()
