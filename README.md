@@ -56,7 +56,11 @@ Architecture
 
 The following architecture represents the main application and RAG pipeline:
 
+## Architecture
+
+```mermaid
 flowchart TD
+
     U[User] --> UI[Streamlit UI<br/>app.py]
 
     UI --> Q{RAG Enabled?}
@@ -65,6 +69,7 @@ flowchart TD
     Q -->|Yes| R[chain.py<br/>RAG Generation Chain]
 
     UI --> FI[RAG File Ingestion]
+
     FI --> UT[utils.py<br/>Document Processing]
     UT --> CH[Text Splitting]
     CH --> EMB[Hugging Face MiniLM<br/>Embeddings]
@@ -73,20 +78,27 @@ flowchart TD
     R --> RET[Similarity Retrieval<br/>vectordb.py]
     RET --> DB
     RET --> CTX[Relevant Context]
-    CTX --> P[Prompt Template<br/>prompt.py]
 
+    CTX --> P[Prompt Template<br/>prompt.py]
     C --> P
+
     P --> LLM[ChatGroq<br/>LLaMA 3]
+
     LLM --> OUT[Generated Code]
     OUT --> UI
 
-    LS[LangSmith<br/>Tracing & Monitoring] -. monitors .-> C
-    LS -. monitors .-> R
-    LS -. monitors .-> LLM
+    LS[LangSmith<br/>Tracing & Monitoring]
 
-RAG Flow
+    LS -.-> C
+    LS -.-> R
+    LS -.-> LLM
+```
 
+### RAG Flow
+
+```mermaid
 flowchart TD
+
     DOC[Reference Document] --> PROC[Document Processing]
     PROC --> CHUNK[Text Chunking]
     CHUNK --> EMB[MiniLM Embeddings]
@@ -94,12 +106,15 @@ flowchart TD
 
     Q[User Problem] --> RET[Semantic Similarity Search]
     DB --> RET
+
     RET --> CTX[Relevant Context]
 
-    CTX --> PROMPT[RAG Prompt]
-    Q --> PROMPT
+    Q --> PROMPT[RAG Prompt]
+    CTX --> PROMPT
+
     PROMPT --> LLM[LLaMA 3 via Groq]
     LLM --> OUT[Generated Code]
+```
 
 How It Works
 
