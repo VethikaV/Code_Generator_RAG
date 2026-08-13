@@ -1,4 +1,4 @@
-## AI Code Generator
+# AI Code Generator
 
 An AI-powered code generation assistant built with Streamlit, LangChain, LLaMA 3, Groq, Hugging Face MiniLM, ChromaDB, and LangSmith.
 
@@ -171,31 +171,40 @@ AI-Code-Generator/
 
 ## Installation
 
-1. Clone the repository
+### 1. Clone the repository
 
+```bash
 git clone <YOUR-GITHUB-REPOSITORY-URL>
 cd <YOUR-REPOSITORY-FOLDER>
+```
 
-2. Create a virtual environment
+### 2. Create a virtual environment
 
+```bash
 python -m venv venv
+```
 
-Activate it on Windows:
+**Activate it on Windows:**
 
+```bash
 venv\Scripts\activate
+```
 
-On macOS/Linux:
+**On macOS/Linux:**
 
+```bash
 source venv/bin/activate
+```
 
-3. Install dependencies
+### 3. Install dependencies
 
+```bash
 pip install -r requirement.txt
+```
 
-4. Configure API credentials
+### 4. Configure API Credentials
 
-Create a .env file in the project root and add the API credentials required by your ChatGroq/LangSmith configuration.
-
+Create a `.env` file in the project root and add the API credentials required by your ChatGroq/LangSmith configuration.
 
 ```env
 GROQ_API_KEY=your_groq_api_key
@@ -204,10 +213,13 @@ LANGCHAIN_TRACING_V2=true
 LANGCHAIN_PROJECT=code_generator
 ```
 
+**Do not commit your `.env` file or API keys to GitHub.**
 
-5. Run the application
+### 5. Run the Application
 
+```bash
 streamlit run app.py
+```
 
 The Streamlit application will open in your browser.
 
