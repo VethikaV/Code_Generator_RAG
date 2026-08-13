@@ -93,35 +93,31 @@ Example:
 Language: Python
 Problem: Write a function to add two numbers
 
-2. Without RAG
+ 2. Without RAG
 
 When RAG is disabled:
 
-User Problem
-    ↓
-Prompt Template
-    ↓
-LLaMA 3 via ChatGroq
-    ↓
-Generated Code
+```mermaid
+flowchart TD
+    A[User Problem] --> B[Prompt Template]
+    B --> C[LLaMA 3 via ChatGroq]
+    C --> D[Generated Code]
+```
 
 3. With RAG
 
 When RAG is enabled:
 
-User Problem
-    ↓
-Embedding / Similarity Search
-    ↓
-ChromaDB
-    ↓
-Relevant Documents
-    ↓
-RAG Prompt + User Problem
-    ↓
-LLaMA 3 via ChatGroq
-    ↓
-Context-Aware Code
+
+```mermaid
+flowchart TD
+    A[User Problem] --> B[Embedding / Similarity Search]
+    B --> C[(ChromaDB)]
+    C --> D[Relevant Documents]
+    D --> E[RAG Prompt + User Problem]
+    E --> F[LLaMA 3 via ChatGroq]
+    F --> G[Context-Aware Code]
+```
 
 4. Document Ingestion
 
@@ -135,6 +131,7 @@ LangSmith is integrated as the observability layer
 
 ## Project Structure
 
+```text
 AI-Code-Generator/
 │
 ├── Assets/
@@ -148,28 +145,29 @@ AI-Code-Generator/
 │   └── Local ChromaDB persistence
 │
 ├── app.py
-│   └── Streamlit application and UI
-│
 ├── chain.py
-│   └── Standard and RAG generation chains
-│
 ├── model.py
-│   └── ChatGroq and Hugging Face model configuration
-│
 ├── prompt.py
-│   └── Code-generation and RAG prompt templates
-│
 ├── utils.py
-│   └── Document processing and text splitting
-│
 ├── vectordb.py
-│   └── ChromaDB initialization, indexing and retrieval
-│
 ├── requirement.txt
-│   └── Python dependencies
-│
 └── .gitignore
+```
 
+### Module Description
+
+| File / Directory | Description |
+|---|---|
+| `Assets/` | Contains application screenshots used in the README |
+| `chroma_db/` | Local ChromaDB vector-store persistence |
+| `app.py` | Streamlit application and user interface |
+| `chain.py` | Standard and RAG code-generation chains |
+| `model.py` | ChatGroq LLM and Hugging Face embedding configuration |
+| `prompt.py` | Code-generation and RAG prompt templates |
+| `utils.py` | Document processing and text splitting |
+| `vectordb.py` | ChromaDB initialization, indexing, and retrieval |
+| `requirement.txt` | Python project dependencies |
+| `.gitignore` | Specifies files and folders excluded from Git |
 
 ## Installation
 
