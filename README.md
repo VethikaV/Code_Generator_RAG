@@ -196,14 +196,14 @@ pip install -r requirement.txt
 
 Create a .env file in the project root and add the API credentials required by your ChatGroq/LangSmith configuration.
 
-Example:
 
+```env
 GROQ_API_KEY=your_groq_api_key
 LANGCHAIN_API_KEY=your_langsmith_api_key
 LANGCHAIN_TRACING_V2=true
 LANGCHAIN_PROJECT=code_generator
+```
 
-Do not commit .env or API keys to GitHub.
 
 5. Run the application
 
