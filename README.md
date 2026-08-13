@@ -1,97 +1,63 @@
-AI Code Generator
+## AI Code Generator
 
 An AI-powered code generation assistant built with Streamlit, LangChain, LLaMA 3, Groq, Hugging Face MiniLM, ChromaDB, and LangSmith.
 
 The application converts natural-language programming problems into code and can optionally use Retrieval-Augmented Generation (RAG) to ground the generated code in user-provided reference documents.
 
-Overview
+## Overview
 
 Traditional code-generation systems depend mainly on the knowledge encoded in an LLM. This project adds a retrieval layer so that users can provide domain-specific material such as documentation, notes, or reference files.
 
 The system supports two modes:
 
 Code Generator — generates code directly from the user's programming problem.
-
 RAG Code Generator — retrieves relevant information from uploaded documents and uses that context while generating the code.
 
 The interface is implemented using Streamlit, the LLM is accessed through ChatGroq, document embeddings are generated using Hugging Face MiniLM, and the embeddings are stored and retrieved using ChromaDB. LangSmith provides tracing and observability for the LangChain pipeline.
 
-Key Features
+## Key Features
 
-Natural-language to code generation
+- **Natural-language to code generation**
+- **Multi-language support**
+  - Python
+  - JavaScript
+  - C++
+  - Java
+  - Ruby
+  - Go
+  - PHP
+- **Optional RAG mode** for context-aware code generation
+- **Reference document upload** for RAG processing
+- **Semantic document retrieval** using embeddings
+- **Local ChromaDB vector store** for document storage and retrieval
+- **LLaMA 3-based code generation** through Groq
+- **LangChain-based prompt and retrieval orchestration**
+- **LangSmith tracing and monitoring** for debugging and observability
+- **Syntax-highlighted code output** through the Streamlit interface
 
-Multiple programming languages:
-
-Python
-
-JavaScript
-
-C++
-
-Java
-
-Ruby
-
-Go
-
-PHP
-
-Optional RAG mode for context-aware code generation
-
-Upload reference files for RAG processing
-
-Semantic document retrieval using embeddings
-
-Local ChromaDB vector store
-
-LLaMA 3 based code generation through Groq
-
-LangChain prompt and retrieval orchestration
-
-LangSmith tracing, debugging, and observability
-
-Syntax-highlighted code output in the Streamlit interface
-
-Architecture
-
-The following architecture represents the main application and RAG pipeline:
 
 ## Architecture
 
 ```mermaid
 flowchart TD
 
-    U[User] --> UI[Streamlit UI<br/>app.py]
+    U[User]
 
-    UI --> Q{RAG Enabled?}
+    U -->|Describe problem| PS[Prompt Space<br/>Created using Streamlit]
+    U -->|Upload document| PS
 
-    Q -->|No| C[chain.py<br/>Code Generation Chain]
-    Q -->|Yes| R[chain.py<br/>RAG Generation Chain]
+    PS -->|With RAG| FI[File Injection]
+    PS -->|Without RAG| LLM[LLM<br/>LLaMA 3 via ChatGroq]
 
-    UI --> FI[RAG File Ingestion]
+    FI <--> DB[(ChromaDB<br/>Vector Store)]
 
-    FI --> UT[utils.py<br/>Document Processing]
-    UT --> CH[Text Splitting]
-    CH --> EMB[Hugging Face MiniLM<br/>Embeddings]
-    EMB --> DB[(ChromaDB<br/>Vector Store)]
+    FI --> LLM
 
-    R --> RET[Similarity Retrieval<br/>vectordb.py]
-    RET --> DB
-    RET --> CTX[Relevant Context]
+    LLM --> GC[Generate Code]
 
-    CTX --> P[Prompt Template<br/>prompt.py]
-    C --> P
+    GC -->|Records| LS[LangSmith<br/>Monitoring]
 
-    P --> LLM[ChatGroq<br/>LLaMA 3]
-
-    LLM --> OUT[Generated Code]
-    OUT --> UI
-
-    LS[LangSmith<br/>Tracing & Monitoring]
-
-    LS -.-> C
-    LS -.-> R
-    LS -.-> LLM
+    GC --> CD[Code Display]
 ```
 
 ### RAG Flow
@@ -116,7 +82,7 @@ flowchart TD
     LLM --> OUT[Generated Code]
 ```
 
-How It Works
+## How It Works
 
 1. User Input
 
@@ -165,71 +131,9 @@ The project report describes the document-processing pipeline using a recursive 
 
 5. Monitoring
 
-LangSmith is integrated as the observability layer. It can be used to inspect:
+LangSmith is integrated as the observability layer
 
-User inputs
-
-Prompt execution
-
-Retrieval steps
-
-LLM calls
-
-Outputs
-
-Latency
-
-Token usage
-
-Errors and debugging information
-
-Tech Stack
-
-Component
-
-Technology
-
-Frontend / UI
-
-Streamlit
-
-Programming Language
-
-Python
-
-LLM
-
-LLaMA 3
-
-LLM API
-
-Groq / ChatGroq
-
-LLM Framework
-
-LangChain
-
-Embedding Model
-
-Hugging Face all-MiniLM-L6-v2
-
-Vector Database
-
-ChromaDB
-
-Observability
-
-LangSmith
-
-Document Processing
-
-PyMuPDF / PyPDFLoader, python-docx, pandas
-
-Environment Management
-
-python-dotenv
-
-Project Structure
+## Project Structure
 
 AI-Code-Generator/
 │
@@ -266,9 +170,8 @@ AI-Code-Generator/
 │
 └── .gitignore
 
-__pycache__ files and local vector-store data are generally environment-specific. Keep secrets such as API keys out of Git.
 
-Installation
+## Installation
 
 1. Clone the repository
 
@@ -310,154 +213,4 @@ streamlit run app.py
 
 The Streamlit application will open in your browser.
 
-Usage
 
-Generate Code
-
-Open the Code Generator RAG section.
-
-Select the programming language.
-
-Enter the coding problem.
-
-Enable or disable RAG.
-
-Click Generate Code.
-
-Review and copy the generated code.
-
-Use RAG
-
-Open RAG File Ingestion.
-
-Upload a reference document.
-
-Allow the application to process and store the document in ChromaDB.
-
-Return to Code Generator RAG.
-
-Enable RAG for better suggestions.
-
-Enter a coding problem related to the uploaded material.
-
-Generate the context-aware code.
-
-Sample Screenshots
-
-Code Generator Interface
-
-
-
-RAG File Ingestion
-
-
-
-Python Code Generation
-
-
-
-Java Code Generation
-
-
-
-LangSmith Monitoring
-
-
-
-Example
-
-Input
-
-Programming Language: Python
-
-Problem:
-Write a code to add two numbers
-
-Generated Output
-
-def add_numbers(a, b):
-    return a + b
-
-The application displays the generated result directly in the Streamlit interface.
-
-RAG vs. Non-RAG
-
-Mode
-
-Context Source
-
-Use Case
-
-Standard
-
-LLM knowledge + user prompt
-
-General programming tasks
-
-RAG
-
-LLM + retrieved user documents
-
-Domain-specific or reference-driven coding
-
-RAG is useful when the generated code needs to reflect information contained in documentation, project notes, or other reference material.
-
-Core Modules
-
-app.py
-
-Handles the Streamlit interface, user inputs, language selection, RAG toggle, file uploads, and code display.
-
-chain.py
-
-Contains the standard generation chain and RAG generation chain.
-
-model.py
-
-Creates the ChatGroq LLM configuration and the Hugging Face embedding model.
-
-prompt.py
-
-Defines the standard and RAG-enabled prompt templates used for code generation.
-
-utils.py
-
-Processes uploaded documents and splits their content into smaller chunks for retrieval.
-
-vectordb.py
-
-Initializes ChromaDB, stores document chunks, and retrieves relevant documents using similarity search.
-
-Why RAG?
-
-A standalone LLM can generate code from its learned knowledge, but it may not have access to project-specific documentation or newly supplied reference material.
-
-RAG adds an external knowledge layer:
-
-LLM
-+
-External Reference Knowledge
-=
-More Context-Aware Generation
-
-This makes the system suitable for educational, project-specific, and documentation-driven coding tasks.
-
-Future Enhancements
-
-Support additional document loaders for all UI-supported file types
-
-Add code execution and automated testing
-
-Add syntax and security validation
-
-Add conversation history
-
-Add downloadable generated code files
-
-Add support for additional LLM providers
-
-Improve retrieval with configurable top-k similarity search
-
-Add evaluation metrics for generated code quality
-
-Add deployment using Docker or a cloud platform
